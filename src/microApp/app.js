@@ -62,5 +62,14 @@ export default class CreateApp {
    * 卸载应用
    * 执行关闭沙箱，清空缓存等操作
    */
-  unmount() {}
+  unmount(destory) {
+    // 更新状态
+    this.status = 'unmount'
+    // 清空容器
+    this.container = null
+    // destory为true，则删除应用
+    if (destory) {
+      appInstanceMap.delete(this.name)
+    }
+  }
 }
