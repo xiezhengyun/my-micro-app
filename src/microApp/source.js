@@ -1,7 +1,7 @@
 import { fetchSource } from './utils';
 
 export default function loadHtml(app) {
-  fetchSource(app.url)
+  fetchSource(app.url + app.router)
     .then(html => {
       html = html
         .replace(/<head[^>]*>[\s\S]*?<\/head>/i, match => {
@@ -104,7 +104,7 @@ export function fetchLinksFromHtml(app, microAppHead, htmlDom) {
   // 通过fetch请求所有css资源
   const fetchLinkPromise = [];
   for (const [url] of linkEntries) {
-    fetchLinkPromise.push(fetchSource(url));
+    fetchLinkPromise.push(fetchSource(app.url + url));
   }
 
   Promise.all(fetchLinkPromise)
@@ -139,7 +139,7 @@ export function fetchScriptsFromHtml(app, htmlDom) {
   const fetchScriptPromise = [];
   for (const [url, info] of scriptEntries) {
     // 如果是内联script，则不需要请求资源
-    fetchScriptPromise.push(info.code ? Promise.resolve(info.code) : fetchSource(url));
+    fetchScriptPromise.push(info.code ? Promise.resolve(info.code) : fetchSource(app.url + url));
   }
 
   Promise.all(fetchScriptPromise)

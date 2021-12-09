@@ -3,7 +3,7 @@ import CreateApp, { appInstanceMap } from './app';
 class MyElement extends HTMLElement {
   // 声明需要监听的属性名，只有这些属性变化时才会触发attributeChangedCallback
   static get observedAttributes() {
-    return ['name', 'url'];
+    return ['name', 'url', 'router'];
   }
 
   constructor() {
@@ -18,6 +18,7 @@ class MyElement extends HTMLElement {
     const app = new CreateApp({
       name: this.name,
       url: this.url,
+      router: this.router,
       container: this,
     });
 
@@ -43,6 +44,8 @@ class MyElement extends HTMLElement {
       this.name = newVal;
     } else if (attrName === 'url' && !this.url && newVal) {
       this.url = newVal;
+    } else if (attrName === 'router' && !this.router && newVal) {
+      this.router = newVal
     }
   }
 }

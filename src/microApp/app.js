@@ -6,9 +6,10 @@ export const appInstanceMap = new Map();
 // 创建微应用
 // 在初始化实例时，根据传入的参数请求静态资源。
 export default class CreateApp {
-  constructor({ name, url, container }) {
+  constructor({ name, url, router, container }) {
     this.name = name; // 应用名称
     this.url = url; // url地址
+    this.router = router,
     this.container = container; // micro-app元素
     this.status = 'loading';
     loadHtml(this);
