@@ -11,8 +11,15 @@
 <body>
   <div class="app">
     <p>我是基座的元素</p>
+    <p class="click">click delete micro-app</p>
     <micro-app name='subApp' url='http://localhost:8080/' router="subApp.html"></micro-app>
   </div>
 </body>
-
+<script>
+  var node = document.getElementsByClassName('click')[0]
+  node.addEventListener('click',()=>{
+    var microApp = document.getElementsByTagName('micro-app')[0]
+    microApp.remove()
+  })
+</script>
 </html>
