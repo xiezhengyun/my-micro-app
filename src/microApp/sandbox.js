@@ -68,18 +68,19 @@ export default class SandBox {
   stop() {
     if (this.active) {
       this.active = false;
-
+      debugger
       // 清空变量
       this.injectedKeys.forEach(key => {
         Reflect.deleteProperty(this.microWindow, key);
       });
+      
       this.injectedKeys.clear();
       // 卸载全局事件
       this.releaseEffect();
     }
   }
 
-  // 修改js作用域
+  // 修改js作用域 将子应用的window指向代理的对象
   bindScope(code) {
     window.proxyWindow = this.proxyWindow;
     return `;(function(window, self){ 
