@@ -1,16 +1,15 @@
+import { EventCenterForMicroApp } from './data'
+
 // 使用Proxy进行代理操作，代理对象为空对象microWindow，得益于Proxy强大的功能，实现沙箱变得简单且高效。
 // JS沙箱的核心在于修改js作用域和重写window
-
-// 记录addEventListener、removeEventListener原生方法
-const rawWindowAddEventListener = window.addEventListener;
-const rawWindowRemoveEventListener = window.removeEventListener;
-
 export default class SandBox {
   active = false; // 沙箱是否在运行
   microWindow = {}; // // 代理的对象
   injectedKeys = new Set(); // 新添加的属性，在卸载时清空
 
   constructor(appName) {
+    // 创建数据通信对象
+    this.microWindow.microApp = new EventCenterForMicroApp(appName)
     this.releaseEffect = effect(this.microWindow);
     this.proxyWindow = new Proxy(this.microWindow, {
       // 取值
@@ -77,6 +76,8 @@ export default class SandBox {
       this.injectedKeys.clear();
       // 卸载全局事件
       this.releaseEffect();
+      // 清空所有绑定函数
+      this.microWindow.microApp.clearDataListener()
     }
   }
 
@@ -89,6 +90,10 @@ export default class SandBox {
   }
 }
 
+
+// 记录addEventListener、removeEventListener原生方法
+const rawWindowAddEventListener = window.addEventListener;
+const rawWindowRemoveEventListener = window.removeEventListener;
 /**
  * 重写全局事件的监听和解绑
  * @param microWindow 原型对象

@@ -1,9 +1,13 @@
-const name = '基座'
-console.log(name)
+const name = '基座';
+console.log(name);
 
-setTimeout(()=>{
-  console.log(name)
-},5000)
-import SimpleMicroApp from './microApp/index'
+setTimeout(() => {
+  console.log(name);
+}, 5000);
+import SimpleMicroApp, { BaseAppData } from './microApp/index';
 
-SimpleMicroApp.start()
+SimpleMicroApp.start();
+
+setTimeout(() => {
+  BaseAppData.setData('subApp', { name: 'BaseAppData' });
+}, 1500);

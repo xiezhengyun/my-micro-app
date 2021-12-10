@@ -28,5 +28,14 @@
 </body>
 <script>
   console.log('subApp本地script', name)
+  // 数据监听
+  window.microApp?.addDataListener((data) => {
+    console.log("子应用接受数据：", data)
+  })
+  // 发送数据
+  setTimeout(() => {
+    console.log(1)
+    window.microApp?.dispatch({ name: '来自子应用的数据' })
+  }, 5000);
 </script>
 </html>

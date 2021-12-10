@@ -22,9 +22,23 @@
 </body>
 <script>
   var node = document.getElementsByClassName('click')[0]
-  node.addEventListener('click',()=>{
+  node.addEventListener('click', () => {
     var microApp = document.getElementsByTagName('micro-app')[0]
     microApp.remove()
   })
+
+  setTimeout(() => {
+    // 发送数据
+    var microApp = document.getElementsByTagName('micro-app')[0]
+    microApp.setAttribute('data', { val: 1, list: [1, 23, 4] })
+    microApp.setAttribute('data', { val: 2, list: [4, 5, 6] })
+
+    // 监听数据
+    microApp.addEventListener('datachange', (res) => {
+      console.log(res.detail.data);
+    })
+  }, 1000)
+
 </script>
+
 </html>
